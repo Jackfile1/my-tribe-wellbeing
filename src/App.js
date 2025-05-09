@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { QRCodeCanvas as QRCode } from 'qrcode.react';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('checkin');
@@ -234,6 +235,19 @@ function App() {
         {currentPage === 'resources' && (
           <div className="resources-section">
             <h2>Support Resources</h2>
+            
+            <div className="qr-code-container">
+              <h3>Scan to Get the App</h3>
+              <QRCode 
+                value="https://github.com/Jackfile1/my-tribe-wellbeing.git"
+                size={200}
+                level="H"
+                includeMargin={true}
+                className="qr-code"
+              />
+              <p className="qr-instructions">Scan this code to access the Wellbeing Hub on your device</p>
+            </div>
+
             <div className="resources-grid">
               {resources.map((resource, index) => (
                 <div key={index} className="resource-card">
@@ -277,5 +291,3 @@ function App() {
 }
 
 export default App;
-
-
