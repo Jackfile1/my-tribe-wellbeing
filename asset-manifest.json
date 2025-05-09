@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/my-tribe-wellbeing/static/css/main.2a6f74ed.css",
-    "main.js": "/my-tribe-wellbeing/static/js/main.9c37cbcd.js",
+    "main.css": "/my-tribe-wellbeing/static/css/main.49599770.css",
+    "main.js": "/my-tribe-wellbeing/static/js/main.d743c95c.js",
     "static/js/453.a62d4143.chunk.js": "/my-tribe-wellbeing/static/js/453.a62d4143.chunk.js",
     "index.html": "/my-tribe-wellbeing/index.html",
-    "main.2a6f74ed.css.map": "/my-tribe-wellbeing/static/css/main.2a6f74ed.css.map",
-    "main.9c37cbcd.js.map": "/my-tribe-wellbeing/static/js/main.9c37cbcd.js.map",
+    "main.49599770.css.map": "/my-tribe-wellbeing/static/css/main.49599770.css.map",
+    "main.d743c95c.js.map": "/my-tribe-wellbeing/static/js/main.d743c95c.js.map",
     "453.a62d4143.chunk.js.map": "/my-tribe-wellbeing/static/js/453.a62d4143.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2a6f74ed.css",
-    "static/js/main.9c37cbcd.js"
+    "static/css/main.49599770.css",
+    "static/js/main.d743c95c.js"
   ]
 }
