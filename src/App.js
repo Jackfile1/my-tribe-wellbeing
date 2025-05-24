@@ -679,7 +679,7 @@ const deleteSchedule = async (scheduleId) => {
 return (
   <div className="App">
     <header className="App-header">
-      <h1>My Tribe Wellbeing Hub</h1>
+      <h1>My Tribe Connect</h1>
       {!currentUser ? (
         <div className="login-card">
           <form onSubmit={(e) => {
@@ -1941,7 +1941,7 @@ return (
         </>
       ) : (
         <div className="login-message">
-          <h2>Please log in to access the Wellbeing Hub</h2>
+          <h2>Please log in to access My Tribe Connect</h2>
         </div>
       )}
     </main>
