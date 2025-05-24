@@ -1,0 +1,293 @@
+import React, { useState } from 'react';
+import './App.css';
+import { QRCodeCanvas as QRCode } from 'qrcode.react';
+
+function App() {
+  const [currentPage, setCurrentPage] = useState('checkin');
+  const [checkInData, setCheckInData] = useState({
+    mood: '',
+    moodIntensity: '3',
+    energy: '',
+    physical: [],
+    copingToday: [],
+    supportNeeded: '',
+    notes: '',
+    anonymous: false
+  });
+
+  const resources = [
+    {
+      title: "Anna Freud Centre",
+      url: "https://www.annafreud.org/",
+      description: "Mental health support and resources for children and families"
+    },
+    {
+      title: "YoungMinds",
+      url: "https://www.youngminds.org.uk/",
+      description: "Supporting young people's mental health and wellbeing"
+    },
+    {
+      title: "Headspace",
+      url: "https://www.headspace.com/",
+      description: "Mindfulness and meditation (included in vitality healthcare)"
+    },
+    {
+      title: "Training Hub",
+      url: "https://www.minded.org.uk/",
+      description: "Access professional development resources"
+    },
+    {
+      title: "Vitality Benefits",
+      url: "https://www.vitality.co.uk/member/",
+      description: "Access your wellbeing and healthcare benefits"
+    }
+  ];
+
+  const wellbeingActivities = [
+    {
+      title: "Feelings Friday",
+      description: "Join our weekly emotional reflection sessions",
+      time: "Every Friday at 2 PM",
+      location: "Wellbeing Room"
+    },
+    {
+      title: "Monthly Theme",
+      description: "May 2025: Building Resilience",
+      activities: ["Group discussions", "Skill-building workshops", "Reflection exercises"]
+    },
+    {
+      title: "Gratitude Practice",
+      description: "Share what you're thankful for",
+      frequency: "Daily reflections"
+    }
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Check-in submitted:', checkInData);
+    alert('Thank you for your check-in. Support is always available.');
+    setCheckInData({
+      mood: '',
+      moodIntensity: '3',
+      energy: '',
+      physical: [],
+      copingToday: [],
+      supportNeeded: '',
+      notes: '',
+      anonymous: false
+    });
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>My Tribe Wellbeing Hub</h1>
+        <nav className="nav-menu">
+          <button 
+            className={currentPage === 'checkin' ? 'active' : ''} 
+            onClick={() => setCurrentPage('checkin')}
+          >
+            Daily Check-In
+          </button>
+          <button 
+            className={currentPage === 'resources' ? 'active' : ''} 
+            onClick={() => setCurrentPage('resources')}
+          >
+            Resources
+          </button>
+          <button 
+            className={currentPage === 'wellbeing' ? 'active' : ''} 
+            onClick={() => setCurrentPage('wellbeing')}
+          >
+            Wellbeing Corner
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        {currentPage === 'checkin' && (
+          <div className="check-in-form">
+            <h2>Daily Check-In</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>How are you feeling today?</label>
+                <select 
+                  value={checkInData.mood}
+                  onChange={(e) => setCheckInData({...checkInData, mood: e.target.value})}
+                >
+                  <option value="">Choose a mood...</option>
+                  <option value="calm">Calm 😌</option>
+                  <option value="happy">Happy 😊</option>
+                  <option value="anxious">Anxious 😰</option>
+                  <option value="sad">Sad 😢</option>
+                  <option value="angry">Angry 😠</option>
+                  <option value="overwhelmed">Overwhelmed 😫</option>
+                  <option value="numb">Numb 😐</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>How intense is this feeling? (1-5)</label>
+                <input 
+                  type="range" 
+                  min="1" 
+                  max="5" 
+                  value={checkInData.moodIntensity}
+                  onChange={(e) => setCheckInData({...checkInData, moodIntensity: e.target.value})}
+                  className="intensity-slider"
+                />
+                <div className="slider-labels">
+                  <span>Mild</span>
+                  <span>Strong</span>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Physical Wellbeing (select all that apply):</label>
+                <div className="checkbox-group">
+                  {['Well rested', 'Tired', 'Headache', 'Tense muscles', 'Stomach ache', 'Restless'].map(item => (
+                    <label key={item} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={checkInData.physical.includes(item)}
+                        onChange={(e) => {
+                          const updated = e.target.checked
+                            ? [...checkInData.physical, item]
+                            : checkInData.physical.filter(i => i !== item);
+                          setCheckInData({...checkInData, physical: updated});
+                        }}
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>What's helping today? (select all that apply)</label>
+                <div className="checkbox-group">
+                  {[
+                    'Deep breathing',
+                    'Going for walks',
+                    'Talking to someone',
+                    'Quiet time',
+                    'Music',
+                    'Exercise',
+                    'Creative activities',
+                    'Other'
+                  ].map(item => (
+                    <label key={item} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        checked={checkInData.copingToday.includes(item)}
+                        onChange={(e) => {
+                          const updated = e.target.checked
+                            ? [...checkInData.copingToday, item]
+                            : checkInData.copingToday.filter(i => i !== item);
+                          setCheckInData({...checkInData, copingToday: updated});
+                        }}
+                      />
+                      {item}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Would you like support with anything?</label>
+                <select
+                  value={checkInData.supportNeeded}
+                  onChange={(e) => setCheckInData({...checkInData, supportNeeded: e.target.value})}
+                >
+                  <option value="">Choose an option...</option>
+                  <option value="talk">Would like to talk to someone</option>
+                  <option value="resources">Need some resources</option>
+                  <option value="urgent">Need urgent support</option>
+                  <option value="no">I'm okay for now</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Any additional thoughts to share?</label>
+                <textarea
+                  value={checkInData.notes}
+                  onChange={(e) => setCheckInData({...checkInData, notes: e.target.value})}
+                  placeholder="Your thoughts are safe here..."
+                />
+              </div>
+
+              <div className="form-group checkbox">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={checkInData.anonymous}
+                    onChange={(e) => setCheckInData({...checkInData, anonymous: e.target.checked})}
+                  />
+                  Make this check-in anonymous
+                </label>
+              </div>
+
+              <button type="submit">Submit Check-in</button>
+            </form>
+          </div>
+        )}
+
+        {currentPage === 'resources' && (
+          <div className="resources-section">
+            <h2>Support Resources</h2>
+            
+            <div className="qr-code-container">
+              <h3>Scan to Get the App</h3>
+              <QRCode 
+                value="https://github.com/Jackfile1/my-tribe-wellbeing.git"
+                size={200}
+                level="H"
+                includeMargin={true}
+                className="qr-code"
+              />
+              <p className="qr-instructions">Scan this code to access the Wellbeing Hub on your device</p>
+            </div>
+
+            <div className="resources-grid">
+              {resources.map((resource, index) => (
+                <div key={index} className="resource-card">
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                  <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                    Access Resource
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentPage === 'wellbeing' && (
+          <div className="wellbeing-corner">
+            <h2>Wellbeing Corner</h2>
+            <div className="wellbeing-grid">
+              {wellbeingActivities.map((activity, index) => (
+                <div key={index} className="wellbeing-card">
+                  <h3>{activity.title}</h3>
+                  <p>{activity.description}</p>
+                  {activity.time && <p className="time-info">{activity.time}</p>}
+                  {activity.location && <p className="location-info">{activity.location}</p>}
+                  {activity.activities && (
+                    <ul className="activities-list">
+                      {activity.activities.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <button>Join Activity</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+export default App;
